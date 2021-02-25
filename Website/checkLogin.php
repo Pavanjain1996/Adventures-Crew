@@ -1,0 +1,21 @@
+<?php
+session_start();
+include('dbconnection.php');
+$username=$_POST['username'];
+$password=$_POST['password'];
+$query='select password from users where username="'.$username.'"';
+$res=mysqli_query($con,$query);
+if($res){
+    $arr=mysqli_fetch_array($res);
+    if($arr['password']==$password){
+        $_SESSION['username']=$username;
+        header('location:index.php');
+    }
+    else{
+        header('location:login.php');
+    }
+}
+else{
+    header('location:login.php');
+}
+?>
